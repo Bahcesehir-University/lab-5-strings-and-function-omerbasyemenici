@@ -82,7 +82,7 @@ public:
 
 // ---- Constructors ----
 
-MyString::MyString() ; data(""){}
+MyString::MyString() : data(""){}
 
 MyString::MyString(const string& str) : data(str){}
 
@@ -108,7 +108,7 @@ char MyString::charAt(int index) const {
 }
 
 MyString MyString::substring(int start, int len) const {
- if(start<0 || start>= static_cast<int>(data.length()))){
+ if(start<0 || start>= static_cast<int>(data.length())){
      throw out_of_range("Start index out of range in substring");
  }
  return MyString(data.substr(start,len));
@@ -121,7 +121,7 @@ MyString MyString::toUpperCase() const {
     // Hint: Use std::transform with ::toupper
     // Do NOT modify the original object
     string result = data;
-    transform(result.begin(), result.end(), result.begin()),
+    transform(result.begin(), result.end(), result.begin(),
     [](unsigned char c) {return toupper(c);});
     return MyString(result);
 }
@@ -140,10 +140,10 @@ MyString MyString::trim() const {
     // TODO: Return a NEW MyString with leading and trailing whitespace removed
     // Whitespace includes: space, tab (\t), newline (\n), carriage return (\r)
     // Hint: Use find_first_not_of and find_last_not_of
-    size_t start = data.find_first_not_of("\t\n\r");
+    size_t start = data.find_first_not_of(" \t\n\r");
     if(start == string::npos)return MyString("");
-    size_t end = data.find_last_not_of("\t\n\r");
-    return MyString(data.find_last_not_of("\t\n\r"));
+    size_t end = data.find_last_not_of(" \t\n\r");
+    return MyString(data.substr(start,end-start+1));
 }
 
 MyString MyString::reverse() const {
@@ -171,7 +171,8 @@ int MyString::count(char ch) const {
         if (c==ch){
             cnt++;
         }
-    }
+    } 
+    return cnt;
 }
 
 // ---- Function Overloading: append ----
